@@ -50,7 +50,8 @@
 - [ ] Users should be able to read all their published product.
 - [ ] Users should be able to filter their publish product by sold and not sold.
 - [ ] Users should be able to see other users profile.
-- [ ] Users should be able to upload a avatar.
+- [ ] Users should be able to upload an avatar.
+- [ ] User rating should be the average of their products rating.
 
 ### #Files
 - [ ] Users should be able to upload images of their products when is going to publish them.
