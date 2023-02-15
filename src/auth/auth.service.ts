@@ -1,14 +1,14 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { SignUpDto, SignInDto } from './dto';
-import { PrismaService } from '../prisma/prisma.service';
 import * as bcrypt from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
+import { UsersRepository } from 'src/users/users.repository';
 
 @Injectable()
 export class AuthService {
   constructor(
-    private readonly prisma: PrismaService,
     private readonly jwtService: JwtService,
+    private readonly usersRepository: UsersRepository,
   ) {}
 
   private async hashData(data: string): Promise<string> {
@@ -37,11 +37,7 @@ export class AuthService {
   public async signUpLocal(
     signUpDto: SignUpDto,
   ): Promise<{ access_token: string }> {
-    const user = await this.prisma.user.findUnique({
-      where: {
-        email: signUpDto.email,
-      },
-    });
+    const user = await this.usersRepository.findByEmail(signUpDto.email);
 
     if (user) {
       throw new HttpException(
@@ -52,12 +48,10 @@ export class AuthService {
 
     const hashedPassword = await this.hashData(signUpDto.password);
 
-    const newUser = await this.prisma.user.create({
-      data: {
-        username: signUpDto.username,
-        email: signUpDto.email,
-        password: hashedPassword,
-      },
+    const newUser = await this.usersRepository.create({
+      email: signUpDto.email,
+      username: signUpDto.username,
+      password: hashedPassword,
     });
 
     const token = await this.getToken(newUser.id, newUser.email);
@@ -68,11 +62,7 @@ export class AuthService {
   public async signInLocal(
     signInDto: SignInDto,
   ): Promise<{ access_token: string }> {
-    const user = await this.prisma.user.findUnique({
-      where: {
-        email: signInDto.email,
-      },
-    });
+    const user = await this.usersRepository.findByEmail(signInDto.email);
 
     if (!user) {
       throw new HttpException(
@@ -99,11 +89,7 @@ export class AuthService {
   }
 
   public async getMe(userId: string): Promise<string> {
-    const user = await this.prisma.user.findUnique({
-      where: {
-        id: userId,
-      },
-    });
+    const user = await this.usersRepository.findById(userId);
 
     return user.id;
   }
