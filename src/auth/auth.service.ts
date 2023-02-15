@@ -3,6 +3,7 @@ import { SignUpDto, SignInDto } from './dto';
 import * as bcrypt from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
 import { UsersRepository } from 'src/users/users.repository';
+import { Token } from './interfaces';
 
 @Injectable()
 export class AuthService {
@@ -15,10 +16,7 @@ export class AuthService {
     return await bcrypt.hash(data, 10);
   }
 
-  private async getToken(
-    userId: string,
-    email: string,
-  ): Promise<{ access_token: string }> {
+  private async getToken(userId: string, email: string): Promise<Token> {
     const accessToken = await this.jwtService.signAsync(
       {
         sub: userId,
@@ -34,9 +32,7 @@ export class AuthService {
       access_token: accessToken,
     };
   }
-  public async signUpLocal(
-    signUpDto: SignUpDto,
-  ): Promise<{ access_token: string }> {
+  public async signUpLocal(signUpDto: SignUpDto): Promise<Token> {
     const user = await this.usersRepository.findByEmail(signUpDto.email);
 
     if (user) {
@@ -59,9 +55,7 @@ export class AuthService {
     return token;
   }
 
-  public async signInLocal(
-    signInDto: SignInDto,
-  ): Promise<{ access_token: string }> {
+  public async signInLocal(signInDto: SignInDto): Promise<Token> {
     const user = await this.usersRepository.findByEmail(signInDto.email);
 
     if (!user) {
