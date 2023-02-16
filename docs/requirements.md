@@ -26,12 +26,12 @@
 
 ### #Authentication
 
-- [ ] Users should be able to sign up.
-- [ ] Users should be able to sign in.
-- [ ] Users should be able to logout.
+- [x] Users should be able to sign up.
+- [x] Users should be able to sign in.
 - [ ] Users should be able to reset their password trough email.
 
 ### #Departments
+
 - [ ] Server admin should be able to create a new product department.
 - [ ] Server admin and users should be able to read all the existent department.
 - [ ] Server admin should be able to read a category with their id.
@@ -39,6 +39,7 @@
 - [ ] Server admin should be able to delete an existent department.
 
 ### #Products
+
 - [ ] Users should be able to publish a product to sell.
 - [ ] Users should be able to update their products.
 - [ ] Users should be able to delete their products.
@@ -47,6 +48,7 @@
 - [ ] Users should be able to search a product by their name.
 
 ### #Users
+
 - [ ] Users should be able to read all their published product.
 - [ ] Users should be able to filter their publish product by sold and not sold.
 - [ ] Users should be able to see other users profile.
@@ -54,30 +56,36 @@
 - [ ] User rating should be the average of their products rating.
 
 ### #Files
+
 - [ ] Users should be able to upload images of their products when is going to publish them.
 - [ ] Users should be able to delete images of their published products.
 
 ### #Wishlists
+
 - [ ] Users should be able to add a product to their wishlist.
 - [ ] Users should be able to read the products on their wishlist.
 - [ ] Users should be able to remove a product from their wishlist.
 
 ### #Shopping Carts
+
 - [ ] Users should be able to add a product to their shopping cart.
 - [ ] Users should be able to delete a product from their shopping cart.
 - [ ] Users should be able to read the products from their shopping cart.
 
 ### #Orders
+
 - [ ] Users should be able to create a order with a product.
 - [ ] Users should be able to pay for a order.
 - [ ] Users should be able to read all the products they have an order.
 - [ ] Users should be able to filter their orders based on if it is paid or not.
-- [ ] Server admin should be able to change the status of a order. 
+- [ ] Server admin should be able to change the status of a order.
 
 ### #Payments
+
 - [ ] Users should be able to pay for a order.
 
 ### #Reviews
+
 - [ ] Users should be able to create a review for a product.
 - [ ] Users should be able to delete a review for a product.
 - [ ] Users should be able to see all the reviews for a product.
@@ -86,3 +94,4 @@
 
 - [ ] Users should confirm their account trough email.
 - [ ] Users should reset their password trough email.
+- [ ] Users should receive email for every status their order get.
