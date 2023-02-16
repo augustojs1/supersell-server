@@ -4,7 +4,6 @@ import * as process from 'process';
 import { ValidationPipe } from '@nestjs/common';
 
 async function bootstrap() {
-  // Refactor to config module
   const PORT = process.env.PORT;
   const NODE_ENV = process.env.NODE_ENV;
 

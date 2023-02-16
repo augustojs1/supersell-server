@@ -9,9 +9,8 @@ export class PrismaService
   constructor() {
     super({
       datasources: {
-        // Refactor to config module
         db: {
-          url: 'postgresql://supersell_admin:2448priviet@localhost:5432/supersell?schema=public',
+          url: process.env.DATABASE_URL,
         },
       },
     });

@@ -4,6 +4,9 @@
 
 # env
 .env
+config/env/development.env
+config/env/production.env
+
 
 # Logs
 logs

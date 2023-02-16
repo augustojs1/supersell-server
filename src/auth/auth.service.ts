@@ -4,12 +4,14 @@ import * as bcrypt from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
 import { UsersRepository } from 'src/users/users.repository';
 import { Token } from './interfaces';
+import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class AuthService {
   constructor(
     private readonly jwtService: JwtService,
     private readonly usersRepository: UsersRepository,
+    private configService: ConfigService,
   ) {}
 
   private async hashData(data: string): Promise<string> {
@@ -23,8 +25,8 @@ export class AuthService {
         email: email,
       },
       {
-        secret: 'at-secret', // refactor to config module
-        expiresIn: 60 * 30, // refactor to config module
+        secret: this.configService.get<string>('jwt.secret'),
+        expiresIn: this.configService.get<number>('jwt.expiresIn'),
       },
     );
 
