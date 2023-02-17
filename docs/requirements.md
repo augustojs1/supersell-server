@@ -32,11 +32,11 @@
 
 ### #Departments
 
-- [ ] Server admin should be able to create a new product department.
-- [ ] Server admin and users should be able to read all the existent department.
-- [ ] Server admin should be able to read a department with their id.
-- [ ] Server admin should be able to update an existent department.
-- [ ] Server admin should be able to delete an existent department.
+- [x] Server admin should be able to create a new product department.
+- [x] Server admin and users should be able to read all the existent department.
+- [x] Server admin should be able to read a department with their id.
+- [x] Server admin should be able to update an existent department.
+- [x] Server admin should be able to delete an existent department.
 
 ### #Products
 

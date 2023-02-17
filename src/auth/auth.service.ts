@@ -1,21 +1,22 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { SignUpDto, SignInDto } from './dto';
-import * as bcrypt from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
 import { UsersRepository } from 'src/users/users.repository';
 import { Token } from './interfaces';
 import { ConfigService } from '@nestjs/config';
+import { HashProvider } from './providers/hash.provider';
 
 @Injectable()
 export class AuthService {
   constructor(
     private readonly jwtService: JwtService,
     private readonly usersRepository: UsersRepository,
-    private configService: ConfigService,
+    private readonly configService: ConfigService,
+    private readonly hashProvider: HashProvider,
   ) {}
 
   private async hashData(data: string): Promise<string> {
-    return await bcrypt.hash(data, 10);
+    return await this.hashProvider.hashData(data, 10);
   }
 
   private async getToken(userId: string, email: string): Promise<Token> {
@@ -68,7 +69,7 @@ export class AuthService {
       );
     }
 
-    const passwordMatches = await bcrypt.compare(
+    const passwordMatches = await this.hashProvider.compare(
       signInDto.password,
       user.password,
     );
