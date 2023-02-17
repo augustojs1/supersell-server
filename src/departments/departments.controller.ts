@@ -6,40 +6,47 @@ import {
   Patch,
   Param,
   Delete,
+  UseGuards,
 } from '@nestjs/common';
+import { AccessTokenGuard } from 'src/auth/guards';
 import { DepartmentsService } from './departments.service';
-import { CreateDepartmentDto } from './dto/create-department.dto';
-import { UpdateDepartmentDto } from './dto/update-department.dto';
+import { CreateDepartmentDto, UpdateDepartmentDto } from './dto';
+import { Department } from '../prisma/models/department.model';
 
 @Controller('departments')
 export class DepartmentsController {
   constructor(private readonly departmentsService: DepartmentsService) {}
 
+  @UseGuards(AccessTokenGuard)
   @Post()
-  create(@Body() createDepartmentDto: CreateDepartmentDto) {
-    return this.departmentsService.create(createDepartmentDto);
+  public async create(
+    @Body() createDepartmentDto: CreateDepartmentDto,
+  ): Promise<Department> {
+    return await this.departmentsService.create(createDepartmentDto);
   }
 
   @Get()
-  findAll() {
-    return this.departmentsService.findAll();
+  public async findAll(): Promise<Department[]> {
+    return await this.departmentsService.findAll();
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.departmentsService.findOne(+id);
+  public async findOne(@Param('id') id: string): Promise<Department> {
+    return await this.departmentsService.findOne(id);
   }
 
+  @UseGuards(AccessTokenGuard)
   @Patch(':id')
-  update(
+  public async update(
     @Param('id') id: string,
     @Body() updateDepartmentDto: UpdateDepartmentDto,
-  ) {
-    return this.departmentsService.update(+id, updateDepartmentDto);
+  ): Promise<Department> {
+    return await this.departmentsService.update(id, updateDepartmentDto);
   }
 
+  @UseGuards(AccessTokenGuard)
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.departmentsService.remove(+id);
+  public async remove(@Param('id') id: string): Promise<void> {
+    return await this.departmentsService.remove(id);
   }
 }

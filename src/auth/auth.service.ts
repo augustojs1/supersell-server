@@ -34,6 +34,7 @@ export class AuthService {
       access_token: accessToken,
     };
   }
+
   public async signUpLocal(signUpDto: SignUpDto): Promise<Token> {
     const user = await this.usersRepository.findByEmail(signUpDto.email);
 

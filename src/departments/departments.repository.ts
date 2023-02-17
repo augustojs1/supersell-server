@@ -16,6 +16,26 @@ export class DepartmentsRepository {
     return department;
   }
 
+  public async findAll(): Promise<Department[]> {
+    const departments = await this.prismaService.department.findMany();
+
+    return departments;
+  }
+
+  public async findById(deparmentId: string): Promise<Department | null> {
+    const department = await this.prismaService.department.findUnique({
+      where: {
+        id: deparmentId,
+      },
+    });
+
+    if (department) {
+      return department;
+    }
+
+    return null;
+  }
+
   public async findByName(name: string): Promise<Department | null> {
     const department = await this.prismaService.department.findFirst({
       where: {

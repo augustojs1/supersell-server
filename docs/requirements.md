@@ -7,9 +7,9 @@
 </h3>
 
 - [x] SuperSell Server should be developed using the following technologies: Node.js, Nest.js, TypeScript, PostgreSQL, Prisma and Docker.
-- [ ] REST API should use prefix: '/api/v1/'
+- [x] REST API should use prefix: '/api/v1/'
 - [ ] Should feature a seeder for data.
-- [ ] Docker container for the database.
+- [x] Docker container for the database.
 - [ ] Docker container for the application.
 - [ ] Create Github documentation.
 - [ ] Create Swagger REST API documentation.
@@ -34,7 +34,7 @@
 
 - [ ] Server admin should be able to create a new product department.
 - [ ] Server admin and users should be able to read all the existent department.
-- [ ] Server admin should be able to read a category with their id.
+- [ ] Server admin should be able to read a department with their id.
 - [ ] Server admin should be able to update an existent department.
 - [ ] Server admin should be able to delete an existent department.
 
@@ -57,6 +57,7 @@
 
 ### #Files
 
+- [ ] Create role based permission for admins and user.
 - [ ] Users should be able to upload images of their products when is going to publish them.
 - [ ] Users should be able to delete images of their published products.
 
