@@ -1,10 +1,13 @@
 {
   "name": "supersell-server",
   "version": "0.0.1",
-  "description": "",
-  "author": "",
+  "author": "Augusto Souza",
+  "description": "A Node.js REST API for a fictional marketplace website.",
   "private": true,
   "license": "UNLICENSED",
+  "prisma": {
+    "seed": "ts-node database/seed/main.ts"
+  },
   "scripts": {
     "prebuild": "rimraf dist",
     "build": "nest build",
