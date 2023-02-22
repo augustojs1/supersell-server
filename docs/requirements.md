@@ -75,8 +75,8 @@
 
 ### #Orders
 
-- [ ] Users should be able to create a order with a product.
-- [ ] Users should be able to pay for a order.
+- [ ] Users should be able to create an order with a product.
+- [ ] Users should be able to pay for an order.
 - [ ] Users should be able to read all the products they have an order.
 - [ ] Users should be able to filter their orders based on if it is paid or not.
 - [ ] Server admin should be able to change the status of a order.

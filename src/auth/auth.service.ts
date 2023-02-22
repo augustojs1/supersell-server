@@ -19,11 +19,16 @@ export class AuthService {
     return await this.hashProvider.hashData(data, 10);
   }
 
-  private async getToken(userId: string, email: string): Promise<Token> {
+  private async getToken(
+    userId: string,
+    email: string,
+    isAdmin: boolean,
+  ): Promise<Token> {
     const accessToken = await this.jwtService.signAsync(
       {
         sub: userId,
         email: email,
+        isAdmin: isAdmin,
       },
       {
         secret: this.configService.get<string>('jwt.secret'),
@@ -54,7 +59,11 @@ export class AuthService {
       password: hashedPassword,
     });
 
-    const token = await this.getToken(newUser.id, newUser.email);
+    const token = await this.getToken(
+      newUser.id,
+      newUser.email,
+      newUser.isAdmin,
+    );
 
     return token;
   }
@@ -81,7 +90,7 @@ export class AuthService {
       );
     }
 
-    const token = await this.getToken(user.id, user.email);
+    const token = await this.getToken(user.id, user.email, user.isAdmin);
 
     return token;
   }

@@ -12,12 +12,13 @@ import { AccessTokenGuard } from 'src/auth/guards';
 import { DepartmentsService } from './departments.service';
 import { CreateDepartmentDto, UpdateDepartmentDto } from './dto';
 import { Department } from '../prisma/models/department.model';
+import { AdminGuard } from 'src/users/guards';
 
 @Controller('departments')
 export class DepartmentsController {
   constructor(private readonly departmentsService: DepartmentsService) {}
 
-  @UseGuards(AccessTokenGuard)
+  @UseGuards(AccessTokenGuard, AdminGuard)
   @Post()
   public async create(
     @Body() createDepartmentDto: CreateDepartmentDto,
@@ -35,7 +36,7 @@ export class DepartmentsController {
     return await this.departmentsService.findOne(id);
   }
 
-  @UseGuards(AccessTokenGuard)
+  @UseGuards(AccessTokenGuard, AdminGuard)
   @Patch(':id')
   public async update(
     @Param('id') id: string,
@@ -44,7 +45,7 @@ export class DepartmentsController {
     return await this.departmentsService.update(id, updateDepartmentDto);
   }
 
-  @UseGuards(AccessTokenGuard)
+  @UseGuards(AccessTokenGuard, AdminGuard)
   @Delete(':id')
   public async remove(@Param('id') id: string): Promise<void> {
     return await this.departmentsService.remove(id);
