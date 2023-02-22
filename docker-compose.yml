@@ -17,14 +17,13 @@ services:
   # supersell_server:
   #   build: .
   #   container_name: supersell_server
+  #   restart: always
   #   ports:
   #     - 3333:3333
+  #   depends_on:
+  #     - supersell_database
   #   volumes:
-  #     - .:/usr/app
-
-# networks:
-#   mynetwork:
-#     driver: bridge
+  #     - /usr/app
 
 volumes:
   pgdata:
