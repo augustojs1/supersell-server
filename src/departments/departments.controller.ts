@@ -8,11 +8,11 @@ import {
   Delete,
   UseGuards,
 } from '@nestjs/common';
-import { AccessTokenGuard } from 'src/auth/guards';
+import { AccessTokenGuard } from '../auth/guards';
 import { DepartmentsService } from './departments.service';
 import { CreateDepartmentDto, UpdateDepartmentDto } from './dto';
 import { Department } from '../prisma/models/department.model';
-import { AdminGuard } from 'src/users/guards';
+import { AdminGuard } from '../users/guards';
 
 @Controller('departments')
 export class DepartmentsController {
