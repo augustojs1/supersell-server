@@ -1,6 +1,6 @@
 ### Push DB tables
 
-npx prisma migrate deploy
+npx prisma db push
 
 ### Seed the database
 
