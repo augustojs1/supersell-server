@@ -1,7 +1,7 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { SignUpDto, SignInDto } from './dto';
 import { JwtService } from '@nestjs/jwt';
-import { UsersRepository } from 'src/users/users.repository';
+import { UsersRepository } from '../users/users.repository';
 import { Token } from './interfaces';
 import { ConfigService } from '@nestjs/config';
 import { HashProvider } from './providers/hash.provider';
@@ -19,7 +19,7 @@ export class AuthService {
     return await this.hashProvider.hashData(data, 10);
   }
 
-  private async getToken(
+  public async getToken(
     userId: string,
     email: string,
     isAdmin: boolean,

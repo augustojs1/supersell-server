@@ -49,6 +49,7 @@
 
 ### #Users
 
+- [x] Create role based permission for admins and user.
 - [ ] Users should be able to read all their published product.
 - [ ] Users should be able to filter their publish product by sold and not sold.
 - [ ] Users should be able to see other users profile.
@@ -57,7 +58,6 @@
 
 ### #Files
 
-- [ ] Create role based permission for admins and user.
 - [ ] Users should be able to upload images of their products when is going to publish them.
 - [ ] Users should be able to delete images of their published products.
 
@@ -76,7 +76,6 @@
 ### #Orders
 
 - [ ] Users should be able to create an order with a product.
-- [ ] Users should be able to pay for an order.
 - [ ] Users should be able to read all the products they have an order.
 - [ ] Users should be able to filter their orders based on if it is paid or not.
 - [ ] Server admin should be able to change the status of a order.
