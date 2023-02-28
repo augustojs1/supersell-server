@@ -20,8 +20,9 @@ model User {
   rating     Int?
   avatar_url String?
 
-  created_at DateTime @default(now())
-  updated_at DateTime @updatedAt
+  created_at DateTime   @default(now())
+  updated_at DateTime   @updatedAt
+  Products   Products[]
 
   @@map("users")
 }
@@ -30,8 +31,26 @@ model Department {
   id   String @id @default(uuid())
   name String @unique
 
+  created_at DateTime   @default(now())
+  updated_at DateTime   @updatedAt
+  Products   Products[]
+
+  @@map("departments")
+}
+
+model Products {
+  id            String     @id @default(uuid())
+  user          User       @relation(fields: [user_id], references: [id])
+  user_id       String
+  department    Department @relation(fields: [department_id], references: [id])
+  department_id String
+  name          String     @unique
+  description   String
+  quantity      Int
+  used          Boolean
+
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
 
-  @@map("departments")
+  @@map("products")
 }
