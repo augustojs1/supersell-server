@@ -18,6 +18,8 @@ describe('ProductsService', () => {
             create: jest.fn(),
             findOneByName: jest.fn(),
             findOneById: jest.fn(),
+            update: jest.fn(),
+            delete: jest.fn(),
           },
         },
         {
@@ -111,6 +113,119 @@ describe('ProductsService', () => {
       expect(error.status).toBe(404);
       expect(repository.findOneByName).toHaveBeenCalled();
       expect(departmentsRepository.findById).toHaveBeenCalled();
+    }
+  });
+
+  // update
+  it('should be able to update a product', async () => {
+    // Arrange
+    const productId = 'bnfsydb736';
+    const userId = '2134123';
+
+    const product = {
+      name: 'product',
+      user_id: '2134123',
+      description: 'a product1',
+      department_id: '3212we2rs',
+      quantity: 20,
+      used: false,
+    };
+
+    const updateProduct = {
+      name: 'new product',
+      description: 'bbbbbbbb',
+      quantity: 20,
+      department_id: '3212we2rs',
+      user_id: '2134123',
+      used: false,
+    };
+    jest.spyOn(repository, 'findOneById').mockResolvedValueOnce(product);
+    jest.spyOn(repository, 'update').mockResolvedValueOnce(updateProduct);
+
+    // Act
+    const result = await service.update(productId, userId, updateProduct);
+
+    // Assert
+    expect(result.name).toBe('new product');
+    expect(repository.findOneById).toHaveBeenCalled();
+    expect(repository.update).toHaveBeenCalled();
+  });
+
+  it('should throw an error if trying to update a product that does not exist', async () => {
+    // Arrange
+    const productId = 'bnfsydb736';
+
+    const userId = '2134123';
+
+    const product = {
+      name: 'product',
+      user_id: '2134123',
+      description: 'a product1',
+      department_id: '3212we2rs',
+      quantity: 20,
+      used: false,
+    };
+
+    jest.spyOn(repository, 'findOneById').mockResolvedValueOnce(null);
+
+    try {
+      // Act
+      await service.update(productId, userId, product);
+    } catch (error) {
+      // Assert
+      expect(error.message).toBe('Product with this id does not exist!');
+    }
+  });
+
+  // remove
+  it('should be able to delete a product', async () => {
+    // Arrange
+    const productId = 'bnfsydb736';
+
+    const userId = '2134123';
+
+    const product = {
+      name: 'product',
+      user_id: '2134123',
+      description: 'a product1',
+      department_id: '3212we2rs',
+      quantity: 20,
+      used: false,
+    };
+
+    jest.spyOn(repository, 'findOneById').mockResolvedValueOnce(product);
+
+    // Act
+    const result = await service.remove(productId, userId);
+
+    // Assert
+    expect(result).toBeFalsy();
+  });
+
+  it('should throw an error if trying to delete a product that does not exist', async () => {
+    // Arrange
+    const productId = 'bnfsydb736';
+
+    const userId = '2134123';
+
+    const product = {
+      name: 'product',
+      user_id: '2134123',
+      description: 'a product1',
+      department_id: '3212we2rs',
+      quantity: 20,
+      used: false,
+    };
+
+    jest.spyOn(repository, 'findOneById').mockResolvedValueOnce(null);
+    jest.spyOn(repository, 'delete').mockResolvedValueOnce();
+
+    try {
+      // Act
+      await service.remove(productId, userId);
+    } catch (error) {
+      // Assert
+      expect(error.message).toBe('Product with this id does not exist!');
     }
   });
 });

@@ -11,5 +11,5 @@ export class UpdateProductDto {
 
   @IsNumber()
   @IsOptional()
-  quantity: 10;
+  quantity: number;
 }

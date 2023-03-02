@@ -46,12 +46,21 @@ export class ProductsService {
     return newProduct;
   }
 
-  public async findAll() {
-    return `This action returns all products`;
-  }
+  public async findAllByDepartment(departmentId: string): Promise<Product[]> {
+    const department = await this.departmentsRepository.findById(departmentId);
 
-  public async findAllByDepartment(departmentId: string) {
-    return `This action returns all products with department id #${departmentId}`;
+    if (!department) {
+      throw new HttpException(
+        'Department with this id does not exist',
+        HttpStatus.NOT_FOUND,
+      );
+    }
+
+    const products = await this.productsRepository.findAllByDepartment(
+      departmentId,
+    );
+
+    return products;
   }
 
   public async findOne(id: string) {

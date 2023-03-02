@@ -22,6 +22,16 @@ export class ProductsRepository {
     return product;
   }
 
+  public async findAllByDepartment(departmentId: string): Promise<Product[]> {
+    const products = await this.prismaService.products.findMany({
+      where: {
+        department_id: departmentId,
+      },
+    });
+
+    return products;
+  }
+
   public async findOneByName(name: string): Promise<Product | null> {
     const product = await this.prismaService.products.findFirst({
       where: {

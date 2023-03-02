@@ -29,20 +29,15 @@ export class ProductsController {
     return await this.productsService.create(user.sub, createProductDto);
   }
 
-  @Get()
-  public async findAll() {
-    return this.productsService.findAll();
-  }
-
   @Get('department/:departmentId')
   public async findAllByDepartment(
     @Param('departmentId') departmentId: string,
-  ) {
+  ): Promise<Product[]> {
     return await this.productsService.findAllByDepartment(departmentId);
   }
 
   @Get(':id')
-  public async findOne(@Param('id') id: string) {
+  public async findOne(@Param('id') id: string): Promise<string> {
     return this.productsService.findOne(id);
   }
 
@@ -52,7 +47,7 @@ export class ProductsController {
     @Param('id') id: string,
     @Body() updateProductDto: UpdateProductDto,
     @GetCurrentUserDecorator() user: CurrentUser,
-  ) {
+  ): Promise<Product> {
     return await this.productsService.update(id, user.sub, updateProductDto);
   }
 
