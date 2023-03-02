@@ -46,12 +46,14 @@ export class ProductsController {
     return this.productsService.findOne(id);
   }
 
+  @UseGuards(AccessTokenGuard)
   @Patch(':id')
   public async update(
     @Param('id') id: string,
     @Body() updateProductDto: UpdateProductDto,
+    @GetCurrentUserDecorator() user: CurrentUser,
   ) {
-    return this.productsService.update(id, updateProductDto);
+    return await this.productsService.update(id, user.sub, updateProductDto);
   }
 
   @Delete(':id')

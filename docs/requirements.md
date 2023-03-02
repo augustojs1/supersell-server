@@ -40,8 +40,8 @@
 
 ### #Products
 
-- [ ] Users should be able to publish a product to sell.
-- [ ] Users should be able to update their products.
+- [x] Users should be able to publish a product to sell.
+- [x] Users should be able to update their products.
 - [ ] Users should be able to delete their products.
 - [ ] Users should be able to read information about a given product.
 - [ ] Users should be able to read all products in a category and paginate trough the results.

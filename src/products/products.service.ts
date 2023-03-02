@@ -58,8 +58,33 @@ export class ProductsService {
     return `This action returns a #${id} product`;
   }
 
-  public async update(id: string, updateProductDto: UpdateProductDto) {
-    return `This action updates a #${id} product`;
+  public async update(
+    id: string,
+    userId: string,
+    updateProductDto: UpdateProductDto,
+  ): Promise<Product> {
+    const product = await this.productsRepository.findOneById(id);
+
+    if (!product) {
+      throw new HttpException(
+        'Product with this id does not exist!',
+        HttpStatus.NOT_FOUND,
+      );
+    }
+
+    if (product.user_id !== userId) {
+      throw new HttpException(
+        'User can not perform this action!',
+        HttpStatus.FORBIDDEN,
+      );
+    }
+
+    const updatedProduct = await this.productsRepository.update(
+      id,
+      updateProductDto,
+    );
+
+    return updatedProduct;
   }
 
   public async remove(id: string) {
