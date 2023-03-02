@@ -56,8 +56,12 @@ export class ProductsController {
     return await this.productsService.update(id, user.sub, updateProductDto);
   }
 
+  @UseGuards(AccessTokenGuard)
   @Delete(':id')
-  public async remove(@Param('id') id: string) {
-    return this.productsService.remove(id);
+  public async remove(
+    @Param('id') id: string,
+    @GetCurrentUserDecorator() user: CurrentUser,
+  ): Promise<void> {
+    return await this.productsService.remove(id, user.sub);
   }
 }

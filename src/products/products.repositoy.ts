@@ -65,4 +65,12 @@ export class ProductsRepository {
 
     return updatedProduct;
   }
+
+  public async delete(id: string): Promise<void> {
+    await this.prismaService.products.delete({
+      where: {
+        id,
+      },
+    });
+  }
 }

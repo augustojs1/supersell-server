@@ -87,7 +87,23 @@ export class ProductsService {
     return updatedProduct;
   }
 
-  public async remove(id: string) {
-    return `This action removes a #${id} product`;
+  public async remove(id: string, userId: string): Promise<void> {
+    const product = await this.productsRepository.findOneById(id);
+
+    if (!product) {
+      throw new HttpException(
+        'Product with this id does not exist!',
+        HttpStatus.NOT_FOUND,
+      );
+    }
+
+    if (product.user_id !== userId) {
+      throw new HttpException(
+        'User can not perform this action!',
+        HttpStatus.FORBIDDEN,
+      );
+    }
+
+    await this.productsRepository.delete(id);
   }
 }
