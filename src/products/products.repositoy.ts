@@ -3,6 +3,7 @@ import { PrismaService } from '../prisma/prisma.service';
 import type { Product } from '../prisma/models';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
+import { PaginationOptions } from './interfaces/pagination-options.interface';
 
 @Injectable()
 export class ProductsRepository {
@@ -22,11 +23,16 @@ export class ProductsRepository {
     return product;
   }
 
-  public async findAllByDepartment(departmentId: string): Promise<Product[]> {
+  public async findAllByDepartment(
+    departmentId: string,
+    paginationOptions: PaginationOptions,
+  ): Promise<Product[]> {
     const products = await this.prismaService.products.findMany({
       where: {
         department_id: departmentId,
       },
+      skip: paginationOptions.page,
+      take: paginationOptions.limit,
     });
 
     return products;

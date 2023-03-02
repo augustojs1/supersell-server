@@ -3,7 +3,9 @@ import { DepartmentsRepository } from '../departments/departments.repository';
 import type { Product } from '../prisma/models';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
+import { PaginatedProductsDTO } from './dto/paginated-product.dto';
 import { ProductsRepository } from './products.repositoy';
+import { PaginationOptions } from './interfaces/pagination-options.interface';
 
 @Injectable()
 export class ProductsService {
@@ -46,7 +48,10 @@ export class ProductsService {
     return newProduct;
   }
 
-  public async findAllByDepartment(departmentId: string): Promise<Product[]> {
+  public async findAllByDepartment(
+    paginationOptions: PaginationOptions,
+    departmentId: string,
+  ): Promise<PaginatedProductsDTO> {
     const department = await this.departmentsRepository.findById(departmentId);
 
     if (!department) {
@@ -58,9 +63,22 @@ export class ProductsService {
 
     const products = await this.productsRepository.findAllByDepartment(
       departmentId,
+      {
+        page: paginationOptions.limit * (paginationOptions.page - 1),
+        limit: paginationOptions.limit,
+      },
     );
 
-    return products;
+    const totalCount = products.length;
+
+    const totalPages = Math.ceil(totalCount / paginationOptions.limit);
+
+    return {
+      data: products,
+      totalCount,
+      currentPage: paginationOptions.page,
+      totalPages,
+    };
   }
 
   public async findOne(id: string) {

@@ -7,10 +7,13 @@ import {
   Param,
   Delete,
   UseGuards,
+  Query,
+  ParseIntPipe,
 } from '@nestjs/common';
 import { ProductsService } from './products.service';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
+import { PaginatedProductsDTO } from './dto/paginated-product.dto';
 import { AccessTokenGuard } from '../auth/guards';
 import { GetCurrentUserDecorator } from '../auth/decorators';
 import type { CurrentUser } from '../auth/interfaces';
@@ -32,8 +35,13 @@ export class ProductsController {
   @Get('department/:departmentId')
   public async findAllByDepartment(
     @Param('departmentId') departmentId: string,
-  ): Promise<Product[]> {
-    return await this.productsService.findAllByDepartment(departmentId);
+    @Query('page') page = 1,
+    @Query('limit') limit = 10,
+  ): Promise<PaginatedProductsDTO> {
+    return await this.productsService.findAllByDepartment(
+      { page: Number(page), limit: Number(limit) },
+      departmentId,
+    );
   }
 
   @Get(':id')
