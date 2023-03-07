@@ -13,8 +13,11 @@ export class ProductsRepository {
     userId: string,
     createProductDto: CreateProductDto,
   ): Promise<Product> {
+    console.log('product.:', createProductDto);
+
     const product = await this.prismaService.products.create({
       data: {
+        price: createProductDto.price,
         user_id: userId,
         ...createProductDto,
       },
@@ -50,6 +53,19 @@ export class ProductsRepository {
     }
 
     return product;
+  }
+
+  public async findByLikeName(search: string): Promise<Product[]> {
+    const searchResults = await this.prismaService.products.findMany({
+      where: {
+        name: {
+          contains: search,
+          mode: 'insensitive',
+        },
+      },
+    });
+
+    return searchResults;
   }
 
   public async findOneById(id: string): Promise<Product | null> {

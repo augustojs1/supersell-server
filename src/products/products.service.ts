@@ -48,6 +48,12 @@ export class ProductsService {
     return newProduct;
   }
 
+  public async searchByName(search: string): Promise<Product[]> {
+    const searchResult = await this.productsRepository.findByLikeName(search);
+
+    return searchResult;
+  }
+
   public async findAllByDepartment(
     paginationOptions: PaginationOptions,
     departmentId: string,

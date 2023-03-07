@@ -18,6 +18,10 @@ export class CreateProductDto {
   quantity: number;
 
   @IsNotEmpty()
+  @IsNumber()
+  price: number;
+
+  @IsNotEmpty()
   @IsBoolean()
   used: boolean;
 }

@@ -7,6 +7,7 @@ export class Product {
   description: string;
   quantity: number;
   used: boolean;
+  price?: number;
   created_at?: Date;
   updated_at?: Date;
 }

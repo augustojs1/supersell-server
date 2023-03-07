@@ -45,6 +45,7 @@ model Products {
   department    Department @relation(fields: [department_id], references: [id])
   department_id String
   name          String     @unique
+  price         Float
   description   String
   quantity      Int
   used          Boolean

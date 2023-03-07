@@ -8,7 +8,6 @@ import {
   Delete,
   UseGuards,
   Query,
-  ParseIntPipe,
 } from '@nestjs/common';
 import { ProductsService } from './products.service';
 import { CreateProductDto } from './dto/create-product.dto';
@@ -30,6 +29,13 @@ export class ProductsController {
     @GetCurrentUserDecorator() user: CurrentUser,
   ): Promise<Product> {
     return await this.productsService.create(user.sub, createProductDto);
+  }
+
+  @Get()
+  public async searchProduct(
+    @Query('search') search: string,
+  ): Promise<Product[]> {
+    return await this.productsService.searchByName(search);
   }
 
   @Get('department/:departmentId')
