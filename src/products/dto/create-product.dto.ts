@@ -14,14 +14,14 @@ export class CreateProductDto {
   department_id: string;
 
   @IsNotEmpty()
-  @IsNumber()
+  @IsString()
   quantity: number;
 
   @IsNotEmpty()
-  @IsNumber()
+  @IsString()
   price: number;
 
   @IsNotEmpty()
-  @IsBoolean()
+  @IsString()
   used: boolean;
 }

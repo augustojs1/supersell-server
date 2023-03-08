@@ -8,6 +8,8 @@ import {
   Delete,
   UseGuards,
   Query,
+  UseInterceptors,
+  UploadedFiles,
 } from '@nestjs/common';
 import { ProductsService } from './products.service';
 import { CreateProductDto } from './dto/create-product.dto';
@@ -17,6 +19,8 @@ import { AccessTokenGuard } from '../auth/guards';
 import { GetCurrentUserDecorator } from '../auth/decorators';
 import type { CurrentUser } from '../auth/interfaces';
 import type { Product } from '../prisma/models';
+import { FilesInterceptor } from '@nestjs/platform-express';
+import { diskStorage } from 'multer';
 
 @Controller('products')
 export class ProductsController {
@@ -24,11 +28,22 @@ export class ProductsController {
 
   @UseGuards(AccessTokenGuard)
   @Post()
+  @UseInterceptors(
+    FilesInterceptor('images', 6, {
+      storage: diskStorage({
+        destination: './tmp/products',
+        filename: function (_, file, callback) {
+          callback(null, `${file.originalname}`);
+        },
+      }),
+    }),
+  )
   public async create(
     @Body() createProductDto: CreateProductDto,
+    @UploadedFiles() files: Array<Express.Multer.File>,
     @GetCurrentUserDecorator() user: CurrentUser,
-  ): Promise<Product> {
-    return await this.productsService.create(user.sub, createProductDto);
+  ): Promise<void> {
+    // return await this.productsService.create(user.sub, createProductDto);
   }
 
   @Get()

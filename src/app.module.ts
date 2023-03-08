@@ -6,9 +6,13 @@ import { ConfigModule } from '@nestjs/config';
 import { configuration } from '../config/configuration';
 import { DepartmentsModule } from './departments/departments.module';
 import { ProductsModule } from './products/products.module';
+import { MulterModule } from '@nestjs/platform-express';
 
 @Module({
   imports: [
+    MulterModule.register({
+      dest: './tmp',
+    }),
     ConfigModule.forRoot({
       envFilePath: `${process.cwd()}/config/env/${process.env.NODE_ENV}.env`,
       isGlobal: true,
