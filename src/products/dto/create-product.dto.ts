@@ -1,4 +1,11 @@
-import { IsNotEmpty, IsString, IsBoolean, IsNumber } from 'class-validator';
+import {
+  IsNotEmpty,
+  IsString,
+  IsBoolean,
+  IsNumber,
+  IsOptional,
+} from 'class-validator';
+import { CreateFileDto } from '../../files/dto/create-file.dto';
 
 export class CreateProductDto {
   @IsNotEmpty()
@@ -24,4 +31,7 @@ export class CreateProductDto {
   @IsNotEmpty()
   @IsString()
   used: boolean;
+
+  @IsOptional()
+  files?: CreateFileDto[];
 }

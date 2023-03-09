@@ -54,23 +54,26 @@ model Products {
 
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
+  Files      Files[]
 
   @@map("products")
 }
 
 model Files {
-  id            String      @id @default(uuid())
-  user          User?       @relation(fields: [user_id], references: [id])
-  user_id       String?
-  department    Department? @relation(fields: [department_id], references: [id])
-  department_id String?
-  url           String
-  filename      String
-  size          Int
-  mimetype      String
+  id         String    @id @default(uuid())
+  user       User?     @relation(fields: [user_id], references: [id])
+  user_id    String?
+  product    Products? @relation(fields: [product_id], references: [id])
+  product_id String?
+  url        String
+  filename   String
+  size       Int
+  mimetype   String
 
-  created_at DateTime @default(now())
-  updated_at DateTime @updatedAt
+  created_at   DateTime    @default(now())
+  updated_at   DateTime    @updatedAt
+  Department   Department? @relation(fields: [departmentId], references: [id])
+  departmentId String?
 
   @@map("files")
 }

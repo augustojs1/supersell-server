@@ -14,6 +14,7 @@ import {
 import { ProductsService } from './products.service';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
+import { CompleteProductDto } from './dto/complete-product.dto';
 import { PaginatedProductsDTO } from './dto/paginated-product.dto';
 import { AccessTokenGuard } from '../auth/guards';
 import { GetCurrentUserDecorator } from '../auth/decorators';
@@ -42,8 +43,29 @@ export class ProductsController {
     @Body() createProductDto: CreateProductDto,
     @UploadedFiles() files: Array<Express.Multer.File>,
     @GetCurrentUserDecorator() user: CurrentUser,
-  ): Promise<void> {
-    // return await this.productsService.create(user.sub, createProductDto);
+  ): Promise<CompleteProductDto> {
+    const fileArray = files.map((file) => {
+      const path = file.path;
+
+      delete file.fieldname;
+      delete file.originalname;
+      delete file.destination;
+      delete file.path;
+      delete file.encoding;
+
+      return {
+        ...file,
+        url: path,
+      };
+    });
+
+    return await this.productsService.create(user.sub, {
+      ...createProductDto,
+      price: +createProductDto.price,
+      quantity: +createProductDto.quantity,
+      files: fileArray,
+      used: Boolean(createProductDto.used),
+    });
   }
 
   @Get()

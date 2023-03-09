@@ -3,21 +3,27 @@ import { DepartmentsRepository } from '../departments/departments.repository';
 import type { Product } from '../prisma/models';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
+import { CompleteProductDto } from './dto/complete-product.dto';
 import { PaginatedProductsDTO } from './dto/paginated-product.dto';
 import { ProductsRepository } from './products.repositoy';
 import { PaginationOptions } from './interfaces/pagination-options.interface';
+import { FilesService } from '../files/files.service';
 
 @Injectable()
 export class ProductsService {
   constructor(
     private readonly productsRepository: ProductsRepository,
     private readonly departmentsRepository: DepartmentsRepository,
+    private readonly filesService: FilesService,
   ) {}
 
   public async create(
     userId: string,
     createProductDto: CreateProductDto,
-  ): Promise<Product> {
+  ): Promise<CompleteProductDto> {
+    const filesDto = createProductDto.files;
+    let files;
+
     const product = await this.productsRepository.findOneByName(
       createProductDto.name,
     );
@@ -40,12 +46,28 @@ export class ProductsService {
       );
     }
 
+    delete createProductDto.files;
+
     const newProduct = await this.productsRepository.create(
       userId,
       createProductDto,
     );
 
-    return newProduct;
+    if (filesDto.length !== 0) {
+      const mappedFiles = filesDto.map((file) => {
+        return {
+          ...file,
+          product_id: newProduct.id,
+        };
+      });
+
+      files = await this.filesService.create(mappedFiles);
+    }
+
+    return {
+      ...newProduct,
+      files: files,
+    };
   }
 
   public async searchByName(search: string): Promise<Product[]> {

@@ -13,8 +13,6 @@ export class ProductsRepository {
     userId: string,
     createProductDto: CreateProductDto,
   ): Promise<Product> {
-    console.log('product.:', createProductDto);
-
     const product = await this.prismaService.products.create({
       data: {
         price: createProductDto.price,

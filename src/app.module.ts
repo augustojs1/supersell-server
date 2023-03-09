@@ -7,6 +7,7 @@ import { configuration } from '../config/configuration';
 import { DepartmentsModule } from './departments/departments.module';
 import { ProductsModule } from './products/products.module';
 import { MulterModule } from '@nestjs/platform-express';
+import { FilesModule } from './files/files.module';
 
 @Module({
   imports: [
@@ -23,6 +24,7 @@ import { MulterModule } from '@nestjs/platform-express';
     UsersModule,
     DepartmentsModule,
     ProductsModule,
+    FilesModule,
   ],
   controllers: [],
   providers: [],
