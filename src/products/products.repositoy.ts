@@ -32,6 +32,9 @@ export class ProductsRepository {
       where: {
         department_id: departmentId,
       },
+      include: {
+        Files: true,
+      },
       skip: paginationOptions.page,
       take: paginationOptions.limit,
     });
@@ -53,13 +56,16 @@ export class ProductsRepository {
     return product;
   }
 
-  public async findByLikeName(search: string): Promise<Product[]> {
+  public async findByLikeName(search: string): Promise<any> {
     const searchResults = await this.prismaService.products.findMany({
       where: {
         name: {
           contains: search,
           mode: 'insensitive',
         },
+      },
+      include: {
+        Files: true,
       },
     });
 

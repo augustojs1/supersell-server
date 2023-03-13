@@ -48,6 +48,9 @@
 - [x] Users should be able to search a product by their name.
 - [ ] User should be able to see the first photo of a product and the product rating when returning a product list.
 - [ ] User should be able to see all the product photos and rating when fetching a single product.
+- [ ] Users should be able to see the first photo of the product when listing all products.
+- [ ] Users should be able to sort the products by their price by ascending and descending order.
+- [ ] Users should be able to see products sorted by: Best ratings, most sells, recent added...
 
 ### #Users
 
